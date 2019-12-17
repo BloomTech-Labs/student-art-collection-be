@@ -8,10 +8,10 @@ module.exports = {
     },
     useNullAsDefault: true,
     migrations: {
-      directory: './data/migrations/'
+      directory: './data/development/migrations/'
     },
     seeds: {
-      directory: './data/seeds'
+      directory: './data/development/seeds'
     },
     pool: {
       afterCreate: (conn, done) => {
@@ -27,10 +27,10 @@ module.exports = {
     },
     useNullAsDefault: true,
     migrations: {
-      directory: './data/migrations/'
+      directory: './data/development/migrations/'
     },
     seeds: {
-      directory: './data/seeds'
+      directory: './data/development/seeds'
     },
     pool: {
       afterCreate: (conn, done) => {
@@ -63,11 +63,11 @@ module.exports = {
       max: 10
     },
     migrations: {
-      directory: './data/migrations/'
+      directory: './data/production/migrations/'
     },
     seeds: {
-      directory: './data/seeds'
+      directory: './data/production/seeds'
     },
   }
-  
+
 };
