@@ -6,17 +6,15 @@
 
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [Heroku](https://student-artco.herokuapp.com/) <br>
+#### Backend deployed at [Heroku](https://student-artco.herokuapp.com/) <br>
 
-## 1️⃣ Getting started
+## Getting started
 
 To get the server running locally:
 
-🚫 adjust these scripts to match your project
-
 - Clone this repo
 - **yarn install** to install all required dependencies
-- **yarn server** to start the local server
+- **yarn dev** to start the local server
 - **yarn test** to start server using testing environment
 
 ### Backend framework goes here
@@ -52,43 +50,66 @@ To get the server running locally:
 | DELETE | `/users/:userId`        | owners, supervisors |                                                    |
 
 # Data Model
+Version: 1.0
 
-🚫This is just an example. Replace this with your data model
-
-#### 2️⃣ ORGANIZATIONS
-
----
-
-```
-{
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
-}
-```
-
-#### USERS
+#### SCHOOLS
 
 ---
 
 ```
 {
   id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
+  school_id: STRING [This comes from the 'uid' property in the USER object from firebase_auth]
+  school_name: STRING
   email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
+  address: STRING
+  city: STRING
+  state: STRING
+  zipcode: STRING
 }
 ```
+
+#### CATEGORIES
+
+---
+
+```
+{
+  id: UUID
+  category: STRING
+}
+```
+
+#### ART
+
+---
+
+```
+{
+  id: UUID
+  title: STRING
+  category: UUID foreign key in CATEGORIES table
+  price: INTEGER
+  artist_name: STRING
+  sold: BOOLEAN
+  school_id: UUID foreign key in ORGANIZATIONS table
+  description: STRING
+  date_posted: TIMESTAMP
+}
+```
+
+#### IMAGES
+
+---
+
+```
+{
+  id: UUID
+  image_url: STRING
+  art_id UUID foreign key in ART table
+}
+```
+
 
 ## 2️⃣ Actions
 
@@ -116,7 +137,7 @@ To get the server running locally:
 
 `deleteUser(userId)` -> deletes everything dependent on the user
 
-## 3️⃣ Environment Variables
+## Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
