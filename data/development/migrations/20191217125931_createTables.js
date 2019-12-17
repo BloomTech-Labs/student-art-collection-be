@@ -5,7 +5,6 @@ exports.up = function(knex) {
       tbl.string('school_id').notNullable()
       tbl.string('school_name').notNullable()
       tbl.string('email').notNullable().unique()
-      tbl.string('password').notNullable()
       tbl.string('address').notNullable()
       tbl.string('city').notNullable()
       tbl.string('zipcode').notNullable()
