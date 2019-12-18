@@ -6,17 +6,15 @@
 
 # API Documentation
 
-#### 1️⃣ Backend delpoyed at [🚫name service here](🚫add URL here) <br>
+#### Backend deployed at [Heroku](https://student-artco.herokuapp.com/) <br>
 
-## 1️⃣ Getting started
+## Getting started
 
 To get the server running locally:
 
-🚫 adjust these scripts to match your project
-
 - Clone this repo
 - **yarn install** to install all required dependencies
-- **yarn server** to start the local server
+- **yarn dev** to start the local server
 - **yarn test** to start server using testing environment
 
 ### Backend framework goes here
@@ -52,43 +50,66 @@ To get the server running locally:
 | DELETE | `/users/:userId`        | owners, supervisors |                                                    |
 
 # Data Model
+Version: 1.0
 
-🚫This is just an example. Replace this with your data model
-
-#### 2️⃣ ORGANIZATIONS
-
----
-
-```
-{
-  id: UUID
-  name: STRING
-  industry: STRING
-  paid: BOOLEAN
-  customer_id: STRING
-  subscription_id: STRING
-}
-```
-
-#### USERS
+#### SCHOOLS
 
 ---
 
 ```
 {
   id: UUID
-  organization_id: UUID foreign key in ORGANIZATIONS table
-  first_name: STRING
-  last_name: STRING
-  role: STRING [ 'owner', 'supervisor', 'employee' ]
+  school_id: STRING [This comes from the 'uid' property in the USER object from firebase_auth]
+  school_name: STRING
   email: STRING
-  phone: STRING
-  cal_visit: BOOLEAN
-  emp_visit: BOOLEAN
-  emailpref: BOOLEAN
-  phonepref: BOOLEAN
+  address: STRING
+  city: STRING
+  state: STRING
+  zipcode: STRING
 }
 ```
+
+#### CATEGORIES
+
+---
+
+```
+{
+  id: UUID
+  category: STRING
+}
+```
+
+#### ART
+
+---
+
+```
+{
+  id: UUID
+  title: STRING
+  category: UUID foreign key in CATEGORIES table
+  price: INTEGER
+  artist_name: STRING
+  sold: BOOLEAN
+  school_id: UUID foreign key in ORGANIZATIONS table
+  description: STRING
+  date_posted: TIMESTAMP
+}
+```
+
+#### IMAGES
+
+---
+
+```
+{
+  id: UUID
+  image_url: STRING
+  art_id UUID foreign key in ART table
+}
+```
+
 
 ## 2️⃣ Actions
 
@@ -116,19 +137,17 @@ To get the server running locally:
 
 `deleteUser(userId)` -> deletes everything dependent on the user
 
-## 3️⃣ Environment Variables
+## Environment Variables
 
 In order for the app to function correctly, the user must set up their own environment variables.
 
 create a .env file that includes the following:
 
-🚫 These are just examples, replace them with the specifics for your app
-    
-    *  STAGING_DB - optional development db for using functionality not available in SQLite
-    *  NODE_ENV - set to "development" until ready for "production"
-    *  JWT_SECRET - you can generate this by using a python shell and running import random''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&amp;*(-*=+)') for i in range(50)])
-    *  SENDGRID_API_KEY - this is generated in your Sendgrid account
-    *  stripe_secret - this is generated in the Stripe dashboard
+PORT = Whatever free port you have open will work fine, if 4000 is not available.
+
+DATABASE_URL = This environment variable does not need to be set up locally, but is set by Heroku when enabling the postgres addon.
+
+DB_ENV = This will default to 'development'. If you wish to use testing, please run the script `yarn test` to run the app in the testing environment. This needs to be configured on Heroku to be set to 'production' (no quotes needed when setting the variable).
     
 ## Contributing
 
