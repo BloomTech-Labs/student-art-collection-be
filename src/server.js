@@ -21,6 +21,6 @@ const resolvers = {
     }
 }
 
-const server = new ApolloServer({typeDefs: schema, resolvers});
+const server = new ApolloServer({typeDefs: schema, resolvers, introspection: true, playground: true});
 
 module.exports = server
