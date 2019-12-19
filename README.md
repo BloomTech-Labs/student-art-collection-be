@@ -7,6 +7,7 @@
 # API Documentation
 
 #### Backend deployed at [Heroku](https://student-artco.herokuapp.com/) <br>
+#### Backend staging at [Heroku](https://student-artco-staging.herokuapp.com/) <br>
 
 ## Getting started
 

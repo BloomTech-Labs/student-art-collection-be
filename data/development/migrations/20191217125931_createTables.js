@@ -19,7 +19,7 @@ exports.up = function(knex) {
       .notNullable()
       .references('id')
       .inTable('categories')
-      tbl.integer('price')
+      tbl.float('price')
       .defaultTo(25)
       tbl.string('artist_name')
       .defaultTo('Anonymous')

@@ -1,7 +1,7 @@
 
 exports.up = function(knex) {
     return knex.schema.createTable('schools', tbl => {
-        tbl.bigIncrements()
+        tbl.increments()
         tbl.string('school_id').notNullable()
         tbl.string('school_name').notNullable()
         tbl.string('email').notNullable().unique()
@@ -9,13 +9,13 @@ exports.up = function(knex) {
         tbl.string('city').notNullable()
         tbl.string('zipcode').notNullable()
     }).createTable('categories', tbl => {
-        tbl.bigIncrements()
+        tbl.increments()
         tbl.string('category')
     }).createTable('art', tbl => {
-        tbl.bigIncrements()
+        tbl.increments()
         tbl.string('title').notNullable()
         .defaultTo('Untitled')
-        tbl.bigInteger('category')
+        tbl.integer('category')
         .notNullable()
         .references('id')
         .inTable('categories')
@@ -25,7 +25,7 @@ exports.up = function(knex) {
         .defaultTo('Anonymous')
         tbl.boolean('sold')
         .defaultTo(false)
-        tbl.bigInteger('school_id')
+        tbl.integer('school_id')
         .notNullable()
         .references('id')
         .inTable('schools')
@@ -35,9 +35,9 @@ exports.up = function(knex) {
         tbl.timestamp('date_posted')
         .defaultTo(knex.fn.now())
     }).createTable('images', tbl => {
-        tbl.bigIncrements()
+        tbl.increments()
         tbl.string('image_url', 2000)
-        tbl.bigInteger('art_id')
+        tbl.integer('art_id')
         .notNullable()
         .references('id')
         .inTable('art')
