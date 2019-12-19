@@ -27,10 +27,10 @@ module.exports = {
     },
     useNullAsDefault: true,
     migrations: {
-      directory: './data/development/migrations/'
+      directory: './data/testing/migrations/'
     },
     seeds: {
-      directory: './data/development/seeds'
+      directory: './data/testing/seeds'
     },
     pool: {
       afterCreate: (conn, done) => {
