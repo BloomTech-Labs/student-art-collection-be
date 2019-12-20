@@ -25,6 +25,15 @@ const resolvers = {
         },
         artByCategory: (parent, {category}) => {
             return db('art').where("category", "=", category)
+        },
+        allImages: () => {
+            return db('images')
+        },
+        image: (parent, {id}) => {
+            return db('images').where({id}).first()
+        },
+        imageByArt: (parent, {art_id}) => {
+            return db('images').where({art_id})
         }
     },
     Mutation: {
@@ -33,11 +42,15 @@ const resolvers = {
             await db('schools').insert(newSchool)
             return newSchool
         },
-        addArt: async (parent, arts) => {
-            const newArt = arts 
-            console.log(newArt)
+        addArt: async (parent, args) => {
+            const newArt = args 
             await db('art').insert(newArt)
             return newArt
+        },
+        addImage: async (parent, args) => {
+            const newImage = args
+            await db('images').insert(newImage)
+            return newImage
         }
     }
 }
