@@ -1,8 +1,8 @@
-const { ApolloServer, gql} = require('apollo-server-express')
+const { ApolloServer} = require('apollo-server-express')
 
 const typeDefs = require('../graphql/schema')
 const resolvers = require('../graphql/resolvers')
 
-const server = new ApolloServer({typeDefs, resolvers, introspection: true, playground: true});
+const server = new ApolloServer({typeDefs, resolvers});
 
 module.exports = server
