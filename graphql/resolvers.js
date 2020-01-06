@@ -8,6 +8,9 @@ const resolvers = {
         school: (parent, {id}) => {
             return db('schools').where({id}).first()
         },
+        schoolBySchoolId: (parent, {school_id}) => {
+            return db('schools').where({school_id}).first()   
+        },
         allCategories: () => {
             return db('categories')
         },
