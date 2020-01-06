@@ -24,6 +24,7 @@ const typeDefs = gql`
         artist_name: String
         description: String
         date_posted: String
+        images: [Image]
     }
     type Image {
         id: ID!
@@ -67,6 +68,36 @@ const typeDefs = gql`
             image_url: String
             art_id: Int
         ): Image!
+        updateSchool(
+            id: ID!
+            school_name: String!
+            email: String!
+            address: String!
+            city: String!
+            zipcode: String!
+        ): School!
+        updateArt(
+            id: ID!
+            price: Int
+            sold: Boolean
+            title: String
+            artist_name: String
+            description: String
+        ): Art!
+        updateImage(
+            id: ID!
+            image_url: String
+            art_id: Int
+        ): Image!
+        deleteSchool(
+            id: ID!
+        ): School
+        deleteArt(
+            id: ID!
+        ): Art
+        deleteImage(
+            id: ID!
+        ): Image
     }
 `
 module.exports = typeDefs
