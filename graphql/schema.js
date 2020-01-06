@@ -24,6 +24,7 @@ const typeDefs = gql`
         artist_name: String
         description: String
         date_posted: String
+        images: [Image]
     }
     type Image {
         id: ID!

@@ -79,6 +79,12 @@ const resolvers = {
 
             return deletedImage
         }
+    },
+    Art: {
+        images: async (parent) => {
+            const id = parent.id
+            return db('images').where('art_id', id)
+        }
     }
 }
 
