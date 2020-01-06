@@ -66,6 +66,33 @@ const typeDefs = gql`
             image_url: String
             art_id: Int
         ): Image!
+        updateSchool(
+            school_name: String!
+            email: String!
+            address: String!
+            city: String!
+            zipcode: String!
+        ): School!
+        updateArt(
+            price: Int
+            sold: Boolean
+            title: String
+            artist_name: String
+            description: String
+        ): Art!
+        updateImage(
+            image_url: String
+            art_id: Int
+        ): Image!
+        deleteSchool(
+            id!
+        ): School
+        deleteArt(
+            id!
+        ): Art
+        deleteImage(
+            id!
+        ): Image
     }
 `
 module.exports = typeDefs
