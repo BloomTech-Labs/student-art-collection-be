@@ -33,6 +33,7 @@ const typeDefs = gql`
     type Query {
         allSchools: [School!]!
         school(id: ID!): School!
+        schoolBySchoolId (school_id: ID!): School!
         allCategories: [Category!]!
         category(id: ID!): Category!
         allArts: [Art!]!
