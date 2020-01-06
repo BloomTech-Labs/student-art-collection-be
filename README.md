@@ -16,7 +16,7 @@ To get the server running locally:
 - Clone this repo
 - **yarn install** to install all required dependencies
 - **yarn dev** to start the local server
-- **yarn test** to start server using testing environment
+- **yarn test** to start server using testing environment (please also run an instance of the server using yarn dev)
 
 ### Backend framework goes here
 
@@ -149,7 +149,7 @@ PORT = Whatever free port you have open will work fine, if 4000 is not available
 DATABASE_URL = This environment variable does not need to be set up locally, but is set by Heroku when enabling the postgres addon.
 
 DB_ENV = This will default to 'development'. If you wish to use testing, please run the script `yarn test` to run the app in the testing environment. This needs to be configured on Heroku to be set to 'production' (no quotes needed when setting the variable).
-    
+
 ## Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.

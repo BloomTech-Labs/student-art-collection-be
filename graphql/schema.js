@@ -1,5 +1,5 @@
 const {gql} = require('apollo-server-express')
-
+console.log(__dirname)
 const typeDefs = gql`
     type School {
         id: ID!
