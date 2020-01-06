@@ -49,9 +49,35 @@ const resolvers = {
             const [ id ] = await db('images').insert(args, 'id')
             return db('images').where('id', id).first()
         },
-        updateSchool: async(parent, args) => {
+        updateSchool: async (parent, args) => {
             await db('schools').where('id', args.id).update(args)
             return db('schools').where('id', args.id).first()
+        },
+        updateArt: async (parent, args) => {
+            await db('art').where('id', args.id).update(args)
+            return db('art').where('id', args.id).first()
+        },
+        updateImage: async (parent, args) => {
+            await db('images').where('id', args.id).update(args)
+            return db('images').where('id', args.id).first()
+        },
+        deleteSchool: async (parent, args) => {
+            const deletedSchool = await db('schools').where('id', args.id).first()
+            await db('schools').where('id', args.id).del()
+
+            return deletedSchool
+        },
+        deleteArt: async (parent, args) => {
+            const deletedArt = await db('art').where('id', args.id).first()
+            await db('art').where('id', args.id).del()
+
+            return deletedArt
+        },
+        deleteImage: async (parent, args) => {
+            const deletedImage = await db('images').where('id', args.id).first()
+            await db('images').where('id', args.id).del()
+
+            return deletedImage
         }
     }
 }

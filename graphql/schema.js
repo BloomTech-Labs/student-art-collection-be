@@ -75,6 +75,7 @@ const typeDefs = gql`
             zipcode: String!
         ): School!
         updateArt(
+            id: ID!
             price: Int
             sold: Boolean
             title: String
@@ -82,6 +83,7 @@ const typeDefs = gql`
             description: String
         ): Art!
         updateImage(
+            id: ID!
             image_url: String
             art_id: Int
         ): Image!
