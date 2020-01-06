@@ -39,15 +39,19 @@ const resolvers = {
     Mutation: {
         addSchool: async (parent, args) => {
             const [ id ] =  await db('schools').insert(args, 'id')
-            return db('schools').where('id', id).first();
+            return db('schools').where('id', id).first()
         },
         addArt: async (parent, args) => {
             const [ id ] = await db('art').insert(args, 'id')            
-            return db('art').where('id', id).first();
+            return db('art').where('id', id).first()
         },
         addImage: async (parent, args) => {
             const [ id ] = await db('images').insert(args, 'id')
-            return db('images').where('id', id).first();
+            return db('images').where('id', id).first()
+        },
+        updateSchool: async(parent, args) => {
+            await db('schools').where('id', args.id).update(args)
+            return db('schools').where('id', args.id).first()
         }
     }
 }

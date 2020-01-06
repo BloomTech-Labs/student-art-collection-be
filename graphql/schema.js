@@ -67,6 +67,7 @@ const typeDefs = gql`
             art_id: Int
         ): Image!
         updateSchool(
+            id: ID!
             school_name: String!
             email: String!
             address: String!
@@ -85,13 +86,13 @@ const typeDefs = gql`
             art_id: Int
         ): Image!
         deleteSchool(
-            id!
+            id: ID!
         ): School
         deleteArt(
-            id!
+            id: ID!
         ): Art
         deleteImage(
-            id!
+            id: ID!
         ): Image
     }
 `
