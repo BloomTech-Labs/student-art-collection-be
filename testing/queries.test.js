@@ -5,6 +5,8 @@ const expect = chai.expect;
 const url = 'http://localhost:4000'
 const request = require('supertest')(url)
 
+// YOU NEED TO RESEED THE DATABASE AT THE CURRENT POINT IN TESTING
+
 // describe('It resets the database', () => {
 //   beforeEach( () => {
 //       db('schools').truncate()
