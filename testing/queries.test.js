@@ -143,4 +143,59 @@ describe('Querying each item by its id', () => {
       }
     })
   })
+  it('gets an art by its school', (done) => {
+    request.post('/graphql')
+    .send({query: '{artBySchool (school_id: 1) {id, category, school_id, price, sold, title, artist_name, description, date_posted, images {image_url}}}'})
+    .end((err, res) => {
+      if (err) {
+        console.log('error in art by school id', err)
+        return done()
+      } else {
+        //console.log('complete', res.body)
+        expect(res.body.data.artBySchool[0]).to.have.property('id')
+        expect(res.body.data.artBySchool[0]).to.have.property('category')
+        expect(res.body.data.artBySchool[0]).to.have.property('school_id')
+        expect(res.body.data.artBySchool[0]).to.have.property('price')
+        expect(res.body.data.artBySchool[0]).to.have.property('sold')
+        expect(res.body.data.artBySchool[0]).to.have.property('title')
+        expect(res.body.data.artBySchool[0]).to.have.property('artist_name')
+        expect(res.body.data.artBySchool[0]).to.have.property('description')
+        expect(res.body.data.artBySchool[0]).to.have.property('date_posted')
+        expect(res.body.data.artBySchool[0]).to.have.property('images')
+        return done()
+      }
+    })
+  })
+  it('gets an image by its id', (done) => {
+    request.post('/graphql')
+    .send({query: '{image (id: 1){id, image_url, art_id}}'})
+    .end((err, res) => {
+      if (err) {
+        console.log('error in image by its id', err)
+        return done()
+      } else {
+        //console.log('complete', res.body)
+        expect(res.body.data.image).to.have.property('id')
+        expect(res.body.data.image).to.have.property('image_url')
+        expect(res.body.data.image).to.have.property('art_id')
+        return done()
+      }
+    })
+  })
+  it('gets an image by the art id', (done) => {
+    request.post('/graphql')
+    .send({query: '{imageByArt (art_id: 1) {id, image_url, art_id}}'})
+    .end((err, res) => {
+      if (err) {
+        console.log('error in image by its art id', err)
+        return done()
+      } else {
+        //console.log('complete', res.body.data.imageByArt)
+        expect(res.body.data.imageByArt[0]).to.have.property('id')
+        expect(res.body.data.imageByArt[0]).to.have.property('image_url')
+        expect(res.body.data.imageByArt[0]).to.have.property('art_id')
+        return done()
+      }
+    })
+  })
 })
