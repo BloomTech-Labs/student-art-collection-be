@@ -7,7 +7,9 @@
 # API Documentation
 
 #### Backend deployed at [Heroku](https://student-artco.herokuapp.com/) <br>
+#### Backend manual testing playground at [Heroku](https://student-artco.herkuapp.com/graphql) <br>
 #### Backend staging at [Heroku](https://student-artco-staging.herokuapp.com/) <br>
+#### Backend manual testing playground at [Heroku](https://student-artco-staging.herkuapp.com/graphql) <br>
 
 ## Getting started
 
@@ -16,7 +18,7 @@ To get the server running locally:
 - Clone this repo
 - **yarn install** to install all required dependencies
 - **yarn dev** to start the local server
-- **yarn test** to start server using testing environment (please also run an instance of the server using yarn dev)
+- **yarn test** to test, please run **yarn dev** to start the local server, **yarn knex migrate:latest --env development** to get a development database loaded up on your local machine, and **yarn knex seed:run --env development**, to seed that database with therequired files. You will need to reseed the database every time you run the tests!
 
 ### Backend framework goes here
 

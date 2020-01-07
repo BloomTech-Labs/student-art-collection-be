@@ -33,7 +33,7 @@ describe('It adds items to the database', () => {
                 console.log('error in adding a new school', err)
                 return done()
             } else {
-                //console.log('complete', res.body.data)
+                //console.log('complete', res.body.data.addSchool)
                 expect(res.body.data.addSchool).to.have.property('school_id')
                 expect(res.body.data.addSchool).to.have.property('school_name')
                 expect(res.body.data.addSchool).to.have.property('email')
@@ -76,6 +76,63 @@ describe('It adds items to the database', () => {
                 console.log('complete', res.body.data.addImage)
                 expect(res.body.data.addImage).to.have.property('image_url')
                 expect(res.body.data.addImage).to.have.property('art_id')
+                return done()
+            }
+        })
+    })
+})
+
+describe('It updates items in the database', () => {
+    it('updates a school in the database', (done) => {
+        request.post('/graphql')
+        .send({query: 'mutation {updateSchool (id: 2, school_name: "Xtro High 2!", email: "xtro@gmail.com", address: "Fake Address", city: "Faketown", zipcode: "Nope!") {id, school_name, email, address, city, zipcode} }'})
+        .end((err, res) => {
+            if (err) {
+                console.log('error in updating a school', err)
+                return done()
+            } else {
+                //console.log('complete', res.body.data.updateSchool)
+                expect(res.body.data.updateSchool).to.have.property('id')
+                expect(res.body.data.updateSchool).to.have.property('school_name')
+                expect(res.body.data.updateSchool).to.have.property('email')
+                expect(res.body.data.updateSchool).to.have.property('address')
+                expect(res.body.data.updateSchool).to.have.property('city')
+                expect(res.body.data.updateSchool).to.have.property('zipcode')
+                return done()
+            }
+        })
+    })
+    it('updates an art in the database', (done) => {
+        request.post('/graphql')
+        .send({query: 'mutation {updateArt (id: 6, price: 3100, sold: true, title: "Titles", artist_name: "Names", description: "Something" ) {id, price, sold, title, artist_name, description}}'})
+        .end((err, res) => {
+            if (err) {
+                console.log('error in updating an art', err)
+                return done()
+            } else {
+                //console.log('complete', res.body.data.updateArt)
+                expect(res.body.data.updateArt).to.have.property('id')
+                expect(res.body.data.updateArt).to.have.property('price')
+                expect(res.body.data.updateArt).to.have.property('sold')
+                expect(res.body.data.updateArt).to.have.property('title')
+                expect(res.body.data.updateArt).to.have.property('artist_name')
+                expect(res.body.data.updateArt).to.have.property('description')
+                return done()
+            }
+        })
+    })
+    it('updates an image in the database', (done) => {
+        request.post('/graphql')
+        .send({query: 'mutation {updateImage (id: 11, image_url: "mightlikeapasta.io" art_id: 1) {id, image_url, art_id} }'})
+        .end((err, res) => {
+            if (err) {
+                console.log('error in updating an image', err)
+                return done()
+            } else {
+                console.log('complete', res.body.data.updateImage)
+                expect(res.body.data.updateImage).to.have.property('id')
+                expect(res.body.data.updateImage).to.have.property('image_url')
+                expect(res.body.data.updateImage).to.have.property('art_id')
                 return done()
             }
         })
