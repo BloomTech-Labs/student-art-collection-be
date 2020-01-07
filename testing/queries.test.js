@@ -102,19 +102,43 @@ describe('Querying each item by its id', () => {
   })
   it('gets a school by its school id', (done) => {
     request.post('/graphql')
-    .send({query: '{schoolBySchoolId (school_id: 123abc456def789ghi){id}}' })
+    .send({query: `{schoolBySchoolId (school_id: "123abc456def789ghi"){id, school_id, school_name, email, address, city, zipcode}}`})
     .end((err, res) => {
       if (err) {
         console.log('error in school by school id', err)
+        return done()
       } else {
-        console.log('complete', res.body)
-        // expect(res.body.data.schoolBySchoolId).to.have.property('id')
-        // expect(res.body.data.schoolBySchoolId).to.have.property('school_id')
-        // expect(res.body.data.schoolBySchoolId).to.have.property('school_name')
-        // expect(res.body.data.schoolBySchoolId).to.have.property('email')
-        // expect(res.body.data.schoolBySchoolId).to.have.property('address')
-        // expect(res.body.data.schoolBySchoolId).to.have.property('city')
-        // expect(res.body.data.schoolBySchoolId).to.have.property('zipcode')
+        //console.log('complete', res.body)
+        expect(res.body.data.schoolBySchoolId).to.have.property('id')
+        expect(res.body.data.schoolBySchoolId).to.have.property('school_id')
+        expect(res.body.data.schoolBySchoolId).to.have.property('school_name')
+        expect(res.body.data.schoolBySchoolId).to.have.property('email')
+        expect(res.body.data.schoolBySchoolId).to.have.property('address')
+        expect(res.body.data.schoolBySchoolId).to.have.property('city')
+        expect(res.body.data.schoolBySchoolId).to.have.property('zipcode')
+        return done()
+      }
+    })
+  })
+  it('gets an art by its id', (done) => {
+    request.post('/graphql')
+    .send({query: '{art (id: 1){id, category, school_id, price, sold, title, artist_name, description, date_posted, images {image_url}}}'})
+    .end((err, res) => {
+      if (err) {
+        console.log('error in art by id', err)
+        return done()
+      } else {
+        //console.log('complete', res.body)
+        expect(res.body.data.art).to.have.property('id')
+        expect(res.body.data.art).to.have.property('category')
+        expect(res.body.data.art).to.have.property('school_id')
+        expect(res.body.data.art).to.have.property('price')
+        expect(res.body.data.art).to.have.property('sold')
+        expect(res.body.data.art).to.have.property('title')
+        expect(res.body.data.art).to.have.property('artist_name')
+        expect(res.body.data.art).to.have.property('description')
+        expect(res.body.data.art).to.have.property('date_posted')
+        expect(res.body.data.art).to.have.property('images')
         return done()
       }
     })
