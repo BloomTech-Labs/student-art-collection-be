@@ -5,13 +5,13 @@ const expect = chai.expect;
 const url = 'http://localhost:4000'
 const request = require('supertest')(url)
 
-describe('GraphQL', () => {
+describe('Querying all by each table', () => {
   it('gets all schools', (done) => {
     request.post('/graphql')
     .send({query: '{allSchools {id, school_id, school_name, email, address, city, zipcode} }'})
     .end((err, res) => {
       if (err) {
-        console.log('error', err)
+        console.log('error in all schools', err)
         return done()
       } else {
         //console.log('complete', res.body.data.allSchools)
@@ -25,7 +25,7 @@ describe('GraphQL', () => {
     .send({query: '{allImages {id, image_url, art_id}}'})
     .end((err, res) => {
       if (err) {
-        console.log('error', err)
+        console.log('error in all images', err)
         return done()
       } else {
         //console.log('complete', res.body.data.allImages)
@@ -39,7 +39,7 @@ describe('GraphQL', () => {
     .send({query: '{allArts {id, category, school_id, price, sold, title, artist_name, description, date_posted}}'})
     .end((err, res) => {
       if (err) {
-        console.log('error', err)
+        console.log('error in all arts', err)
         return done()
       } else {
         //console.log('complete', res.body.data.allArts)
@@ -53,10 +53,68 @@ describe('GraphQL', () => {
     .send({query: '{allCategories {id, category}}'})
     .end((err, res) => {
       if (err) {
-        console.log('error', err)
+        console.log('error in all categories', err)
         return done()
       } else {
-        console.log('complete', res.body.data.allCategories)
+        //console.log('complete', res.body.data.allCategories)
+        expect(res.body.data.allCategories).to.have.lengthOf(5)
+        return done()
+      }
+    })
+  })
+})
+
+describe('Querying each item by its id', () => {
+  it('gets a category by its id', (done) => {
+    request.post('/graphql')
+    .send({query: '{category (id: 1){id, category}}'})
+    .end((err, res) => {
+      if (err) {
+        console.log('error in category by id', err)
+        return done()
+      } else {
+        //console.log('complete', res.body.data.category)
+        expect(res.body.data.category).to.have.property('id')
+        expect(res.body.data.category).to.have.property('category')
+        return done()
+      }
+    })
+  })
+  it('gets a school by its id', (done) => {
+    request.post('/graphql')
+    .send({query: '{school (id: 1){id, school_id, school_name, email, address, city, zipcode}}'})
+    .end((err, res) => {
+      if (err) {
+        console.log('error in school by id', err)
+        return done()
+      } else {
+        //console.log('complete', res.body.data.school)
+        expect(res.body.data.school).to.have.property('id')
+        expect(res.body.data.school).to.have.property('school_id')
+        expect(res.body.data.school).to.have.property('school_name')
+        expect(res.body.data.school).to.have.property('email')
+        expect(res.body.data.school).to.have.property('address')
+        expect(res.body.data.school).to.have.property('city')
+        expect(res.body.data.school).to.have.property('zipcode')
+        return done()
+      }
+    })
+  })
+  it('gets a school by its school id', (done) => {
+    request.post('/graphql')
+    .send({query: '{schoolBySchoolId (school_id: 123abc456def789ghi){id}}' })
+    .end((err, res) => {
+      if (err) {
+        console.log('error in school by school id', err)
+      } else {
+        console.log('complete', res.body)
+        // expect(res.body.data.schoolBySchoolId).to.have.property('id')
+        // expect(res.body.data.schoolBySchoolId).to.have.property('school_id')
+        // expect(res.body.data.schoolBySchoolId).to.have.property('school_name')
+        // expect(res.body.data.schoolBySchoolId).to.have.property('email')
+        // expect(res.body.data.schoolBySchoolId).to.have.property('address')
+        // expect(res.body.data.schoolBySchoolId).to.have.property('city')
+        // expect(res.body.data.schoolBySchoolId).to.have.property('zipcode')
         return done()
       }
     })
