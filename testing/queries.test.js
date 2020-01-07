@@ -5,6 +5,22 @@ const expect = chai.expect;
 const url = 'http://localhost:4000'
 const request = require('supertest')(url)
 
+// describe('It resets the database', () => {
+//   beforeEach( () => {
+//       db('schools').truncate()
+//       request.post('/graphql')
+//       .send({query: 'mutation { addSchool (school_id: "123abc456def789ghi", school_name: "West High School", email: "test-email@example.com", address: "123 West St", city: "Westtown", zipcode: "12345"'})
+//       .end((err, res) => {
+//           if (err) {
+//               console.log('error in resetting tables', err)
+//               return done()
+//           } else {
+//               return done()
+//           }
+//       })
+//   })
+// })
+
 describe('Querying all by each table', () => {
   it('gets all schools', (done) => {
     request.post('/graphql')
