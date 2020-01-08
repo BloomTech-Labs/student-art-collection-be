@@ -37,7 +37,7 @@ const resolvers = {
         },
         imageByArt: (parent, {art_id}) => {
             return db('images').where({art_id})
-        }
+        },
     },
     Mutation: {
         addSchool: async (parent, args) => {
@@ -81,6 +81,10 @@ const resolvers = {
             await db('images').where('id', args.id).del()
 
             return deletedImage
+        },
+        contact: async (parent, args) => {
+            const email = await db('schools').where('school_id', '=', args.school_id).select('email')
+            
         }
     },
     Art: {

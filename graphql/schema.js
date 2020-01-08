@@ -31,6 +31,12 @@ const typeDefs = gql`
         image_url: String
         art_id: Int
     }
+    type Contact {
+        school_id: ID!
+        name: String
+        email: String
+        message: String
+    }
     type Query {
         allSchools: [School!]!
         school(id: ID!): School!
@@ -43,7 +49,7 @@ const typeDefs = gql`
         artByCategory(category: ID!): [Art!]!
         allImages: [Image!]!
         image(id: ID!): Image!
-        imageByArt(art_id: ID!): [Image!]!
+        imageByArt(art_id: ID!): [Image!]! 
     }
     type Mutation {
         addSchool(
@@ -98,6 +104,12 @@ const typeDefs = gql`
         deleteImage(
             id: ID!
         ): Image
+        contact (
+            school_id: ID!
+            name: String
+            email: String
+            message: String
+        ): Contact!
     }
 `
 module.exports = typeDefs
