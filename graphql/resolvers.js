@@ -1,6 +1,7 @@
-const db = require('../data/dbConfig.js')
+const db = require('../data/dbConfig.js');
 
 const resolvers = {
+<<<<<<< HEAD
     Query: {
         allSchools: () => {
             return db('schools')
@@ -67,19 +68,128 @@ const resolvers = {
         deleteSchool: async (parent, args) => {
             const deletedSchool = await db('schools').where('id', args.id).first()
             await db('schools').where('id', args.id).del()
+=======
+  Query: {
+    allSchools: () => {
+      return db('schools');
+    },
+    school: (parent, { id }) => {
+      return db('schools')
+        .where({ id })
+        .first();
+    },
+    schoolBySchoolId: (parent, { school_id }) => {
+      return db('schools')
+        .where({ school_id })
+        .first();
+    },
+    allCategories: () => {
+      return db('categories');
+    },
+    category: (parent, { id }) => {
+      return db('categories')
+        .where({ id })
+        .first();
+    },
+    allArts: () => {
+      return db('art');
+    },
+    art: (parent, { id }) => {
+      return db('art')
+        .where({ id })
+        .first();
+    },
+    artBySchool: (parent, { school_id }) => {
+      return db('art').where({ school_id });
+    },
+    artByCategory: (parent, { category }) => {
+      return db('art').where('category', '=', category);
+    },
+    allImages: () => {
+      return db('images');
+    },
+    image: (parent, { id }) => {
+      return db('images')
+        .where({ id })
+        .first();
+    },
+    imageByArt: (parent, { art_id }) => {
+      return db('images').where({ art_id });
+    },
+  },
+  Mutation: {
+    addSchool: async (parent, args) => {
+      const [id] = await db('schools').insert(args, 'id');
+      return db('schools')
+        .where('id', id)
+        .first();
+    },
+    addArt: async (parent, args) => {
+      const [id] = await db('art').insert(args, 'id');
+      return db('art')
+        .where('id', id)
+        .first();
+    },
+    addImage: async (parent, args) => {
+      const [id] = await db('images').insert(args, 'id');
+      return db('images')
+        .where('id', id)
+        .first();
+    },
+    updateSchool: async (parent, args) => {
+      await db('schools')
+        .where('id', args.id)
+        .update(args);
+      return db('schools')
+        .where('id', args.id)
+        .first();
+    },
+    updateArt: async (parent, args) => {
+      await db('art')
+        .where('id', args.id)
+        .update(args);
+      return db('art')
+        .where('id', args.id)
+        .first();
+    },
+    updateImage: async (parent, args) => {
+      await db('images')
+        .where('id', args.id)
+        .update(args);
+      return db('images')
+        .where('id', args.id)
+        .first();
+    },
+    deleteSchool: async (parent, args) => {
+      const deletedSchool = await db('schools')
+        .where('id', args.id)
+        .first();
+      await db('schools')
+        .where('id', args.id)
+        .del();
+>>>>>>> 4def4ec1a717868619c3c7ecd366d67e7459e120
 
-            return deletedSchool
-        },
-        deleteArt: async (parent, args) => {
-            const deletedArt = await db('art').where('id', args.id).first()
-            await db('art').where('id', args.id).del()
+      return deletedSchool;
+    },
+    deleteArt: async (parent, args) => {
+      const deletedArt = await db('art')
+        .where('id', args.id)
+        .first();
+      await db('art')
+        .where('id', args.id)
+        .del();
 
-            return deletedArt
-        },
-        deleteImage: async (parent, args) => {
-            const deletedImage = await db('images').where('id', args.id).first()
-            await db('images').where('id', args.id).del()
+      return deletedArt;
+    },
+    deleteImage: async (parent, args) => {
+      const deletedImage = await db('images')
+        .where('id', args.id)
+        .first();
+      await db('images')
+        .where('id', args.id)
+        .del();
 
+<<<<<<< HEAD
             return deletedImage
         },
         contact: async (parent, args) => {
@@ -94,5 +204,29 @@ const resolvers = {
         }
     }
 }
+=======
+      return deletedImage;
+    },
+  },
+  Art: {
+    images: async parent => {
+      const id = parent.id;
+      return db('images').where('art_id', id);
+    },
+    school: async parent => {
+      const id = parent.school_id;
+      return db('schools')
+        .where({ id })
+        .first();
+    },
+    category: async parent => {
+      const id = parent.category;
+      return db('categories')
+        .where({ id })
+        .first();
+    },
+  },
+};
+>>>>>>> 4def4ec1a717868619c3c7ecd366d67e7459e120
 
-module.exports = resolvers
+module.exports = resolvers;
