@@ -16,7 +16,6 @@ const typeDefs = gql`
   }
   type Art {
     id: ID!
-    category: ID!
     school_id: ID!
     price: Int
     sold: Boolean
@@ -25,6 +24,7 @@ const typeDefs = gql`
     description: String
     date_posted: String
     school: School
+    category: Category
     images: [Image]
   }
   type Image {

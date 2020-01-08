@@ -134,6 +134,12 @@ const resolvers = {
         .where({ id })
         .first();
     },
+    category: async parent => {
+      const id = parent.category;
+      return db('categories')
+        .where({ id })
+        .first();
+    },
   },
 };
 
