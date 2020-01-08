@@ -7,7 +7,9 @@
 # API Documentation
 
 #### Backend deployed at [Heroku](https://student-artco.herokuapp.com/) <br>
+#### Backend manual testing playground at [Heroku](https://student-artco.herkuapp.com/graphql) <br>
 #### Backend staging at [Heroku](https://student-artco-staging.herokuapp.com/) <br>
+#### Backend manual testing playground at [Heroku](https://student-artco-staging.herkuapp.com/graphql) <br>
 
 ## Getting started
 
@@ -16,7 +18,7 @@ To get the server running locally:
 - Clone this repo
 - **yarn install** to install all required dependencies
 - **yarn dev** to start the local server
-- **yarn test** to start server using testing environment
+- **yarn test** to test, please run **yarn dev** to start the local server, **yarn knex migrate:latest --env development** to get a development database loaded up on your local machine, and **yarn knex seed:run --env development**, to seed that database with therequired files. You will need to reseed the database every time you run the tests!
 
 ### Backend framework goes here
 
@@ -149,7 +151,7 @@ PORT = Whatever free port you have open will work fine, if 4000 is not available
 DATABASE_URL = This environment variable does not need to be set up locally, but is set by Heroku when enabling the postgres addon.
 
 DB_ENV = This will default to 'development'. If you wish to use testing, please run the script `yarn test` to run the app in the testing environment. This needs to be configured on Heroku to be set to 'production' (no quotes needed when setting the variable).
-    
+
 ## Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.
