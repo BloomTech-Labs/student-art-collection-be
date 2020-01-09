@@ -163,7 +163,7 @@ describe('Querying each item by its id', () => {
   })
   it('gets an art by its school', (done) => {
     request.post('/graphql')
-    .send({query: '{artBySchool (school_id: 1) {id, category, school_id, price, sold, title, artist_name, description, date_posted, images {image_url}}}'})
+    .send({query: '{artBySchool (school_id: 1) {id, category {id, category}, school_id, price, sold, title, artist_name, description, date_posted, images {image_url}}}'})
     .end((err, res) => {
       if (err) {
         console.log('error in art by school id', err)

@@ -52,7 +52,7 @@ describe('It adds items to the database', () => {
                 console.log('error in adding a new art', err)
                 return done()
             } else {
-                console.log('complete', res.body)
+                //console.log('complete', res.body)
                 expect(res.body.data.addArt).to.have.property('category')
                 expect(res.body.data.addArt).to.have.property('school_id')
                 expect(res.body.data.addArt).to.have.property('price')
@@ -162,13 +162,13 @@ describe('It deletes items in the database', () => {
     })
     it('deletes a new art in the database', (done) => {
         request.post('/graphql')
-        .send({query: 'mutation { deleteArt(id: 6) { id, category, school_id, price, sold, title, artist_name, description, date_posted } }'})
+        .send({query: 'mutation { deleteArt(id: 6) { id, category {id, category}, school_id, price, sold, title, artist_name, description, date_posted } }'})
         .end((err, res) => {
             if (err) {
                 console.log('error in deleting a newly added art', err)
                 return done()
             } else {
-                console.log('complete', res.body.data.deleteArt)
+                //console.log('complete', res.body.data.deleteArt)
                 expect(res.body.data.deleteArt).to.have.property('id')
                 expect(res.body.data.deleteArt).to.have.property('category')
                 expect(res.body.data.deleteArt).to.have.property('school_id')
@@ -209,7 +209,7 @@ describe('It sends messages through a contact form', () => {
                 console.log('error in sending an email', err)
                 return done()
             } else {
-                console.log('complete', res.body)
+                //console.log('complete', res.body)
                 return done()
             }
         })
