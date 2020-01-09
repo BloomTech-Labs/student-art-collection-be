@@ -46,13 +46,13 @@ describe('It adds items to the database', () => {
     })
     it('adds a new art', (done) => {
         request.post('/graphql')
-        .send({query: 'mutation { addArt (category: 1, school_id: 1, price: 1300, sold: false, title: "Title of Ortx", artist_name: "Ortx", description: "Horror movie") { category, school_id, price, sold, title, artist_name, description, date_posted } }'})
+        .send({query: 'mutation { addArt (category: 1, school_id: 1, price: 1300, sold: false, title: "Title of Ortx", artist_name: "Ortx", description: "Horror movie") { category {id, category}, school_id, price, sold, title, artist_name, description, date_posted } }'})
         .end((err, res) => {
             if (err) {
                 console.log('error in adding a new art', err)
                 return done()
             } else {
-                //console.log('complete', res.body.data.addArt)
+                console.log('complete', res.body)
                 expect(res.body.data.addArt).to.have.property('category')
                 expect(res.body.data.addArt).to.have.property('school_id')
                 expect(res.body.data.addArt).to.have.property('price')
@@ -73,7 +73,7 @@ describe('It adds items to the database', () => {
                 console.log('error in adding a new image', err)
                 return done()
             } else {
-                console.log('complete', res.body.data.addImage)
+                //console.log('complete', res.body.data.addImage)
                 expect(res.body.data.addImage).to.have.property('image_url')
                 expect(res.body.data.addImage).to.have.property('art_id')
                 return done()
@@ -110,7 +110,7 @@ describe('It updates items in the database', () => {
                 console.log('error in updating an art', err)
                 return done()
             } else {
-                //console.log('complete', res.body.data.updateArt)
+                //console.log('complete', res.body)
                 expect(res.body.data.updateArt).to.have.property('id')
                 expect(res.body.data.updateArt).to.have.property('price')
                 expect(res.body.data.updateArt).to.have.property('sold')
@@ -129,7 +129,7 @@ describe('It updates items in the database', () => {
                 console.log('error in updating an image', err)
                 return done()
             } else {
-                console.log('complete', res.body.data.updateImage)
+                //console.log('complete', res.body.data.updateImage)
                 expect(res.body.data.updateImage).to.have.property('id')
                 expect(res.body.data.updateImage).to.have.property('image_url')
                 expect(res.body.data.updateImage).to.have.property('art_id')
@@ -168,7 +168,7 @@ describe('It deletes items in the database', () => {
                 console.log('error in deleting a newly added art', err)
                 return done()
             } else {
-                //console.log('complete', res.body.data.deleteArt)
+                console.log('complete', res.body.data.deleteArt)
                 expect(res.body.data.deleteArt).to.have.property('id')
                 expect(res.body.data.deleteArt).to.have.property('category')
                 expect(res.body.data.deleteArt).to.have.property('school_id')
@@ -190,10 +190,26 @@ describe('It deletes items in the database', () => {
                 console.log('error in deleting a newly added image', err)
                 return done()
             } else {
-                console.log('complete', res.body.data.deleteImage)
+                //console.log('complete', res.body.data.deleteImage)
                 expect(res.body.data.deleteImage).to.have.property('id')
                 expect(res.body.data.deleteImage).to.have.property('image_url')
                 expect(res.body.data.deleteImage).to.have.property('art_id')
+                return done()
+            }
+        })
+    })
+})
+
+describe('It sends messages through a contact form', () => {
+    it('gets back the data we send through the contact form', (done) => {
+        request.post('/graphql')
+        .send({query: 'mutation { sendMail(sendto: "myemail@myemail.com", name: "Test User", subject: "Test", fromUser: "notmyemail@myemail.com", message: "This is only a test") {sendto, name, subject, fromUser, message}}'})
+        .end((err, res) => {
+            if (err) {
+                console.log('error in sending an email', err)
+                return done()
+            } else {
+                console.log('complete', res.body)
                 return done()
             }
         })

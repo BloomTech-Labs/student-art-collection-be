@@ -1,3 +1,6 @@
+// THIS CODE DOESN'T WORK; REASON: WE ARE NOT PAYING FOR FIREBASE.
+// WE ARE KEEPING THIS CODE AS POSTERITY.
+
 require('dotenv').config()
 const functions = require('firebase-functions');
 const admin = require('firebase-admin')
@@ -17,26 +20,59 @@ admin.initializeApp()
 //  response.send("Hello from Firebase!");
 // });
 
+// exports.emailMessage = functions.https.onRequest((req, res) => {
+//     const {sendto, name, subject, email, message} = req.body;
+//     return cors(req, res, () => {
+//         const msg = {
+//             to: sendto,
+//             from: email,
+//             subject: subject,
+//             text: `You have a message from ${name}, ${message}`
+//         };
+//         sgMail.setApiKey(process.env.SGAK);
+//         sgMail.send(msg);
+//         res.status(200).send('success')
+//     }).catch((err) => {
+//         console.log("error", err)
+//         res.status(500).send('error', err)
+//     });
+// });
+
 exports.emailMessage = functions.https.onRequest((req, res) => {
     const {sendto, name, subject, email, message} = req.body;
-    console.log('I am the recipient', sendto)
-    console.log('I am the name', name)
-    console.log('I am the subject', subject)
-    console.log('I am the email', email)
-    console.log('I am the message', message)
     return cors(req, res, () => {
-        const msg = {
-            to: sendto,
-            from: email,
-            subject: subject,
-            text: `You have a message from ${name}, ${message}`
-        };
-        sgMail.setApiKey(process.env.SGAK);
-        sgMail.send(msg);
-        res.status(200).send('success')
-    }).catch((err) => {
-        console.log("error", err)
-        res.status(500).send('error', err)
-    });
-});
-
+    var text = `<div>
+        <h4>Information</h4>
+        <ul>
+            <li>
+            Name - ${name || ""}
+            </li>
+            <li>
+            Email - ${email || ""}
+            </li>
+            <li>
+            Message - ${subject || ""}
+            </li>
+        </ul>
+        <h4>Message</h4>
+        <p>${message || ""}</p>
+    </div>`;
+    const msg = {
+        to: sendto,
+        from: email,
+        subject: subject,
+        text: text,
+        html: text
+    };
+    sgMail.setApiKey(
+        process.env.SGAK
+    );
+    sgMail.send(msg)
+      .then(() => {
+        res.status(200).send("success")
+      }).catch((err) => {
+        console.log("error here!!!", err)
+        res.status(500).send("failure")
+    })
+    })
+  });

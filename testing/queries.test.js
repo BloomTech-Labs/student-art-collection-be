@@ -54,7 +54,7 @@ describe('Querying all by each table', () => {
   })
   it('gets all arts', (done) => {
     request.post('/graphql')
-    .send({query: '{allArts {id, category, school_id, price, sold, title, artist_name, description, date_posted}}'})
+    .send({query: '{allArts {id, category {id, category}, images {id, image_url, art_id}, school {id, school_name, email, address, city, zipcode}  school_id, price, sold, title, artist_name, description, date_posted}}'})
     .end((err, res) => {
       if (err) {
         console.log('error in all arts', err)
@@ -140,7 +140,7 @@ describe('Querying each item by its id', () => {
   })
   it('gets an art by its id', (done) => {
     request.post('/graphql')
-    .send({query: '{art (id: 1){id, category, school_id, price, sold, title, artist_name, description, date_posted, images {image_url}}}'})
+    .send({query: '{art (id: 1){id, school_id, price, sold, title, artist_name, description, date_posted, category {id, category}, images {id, image_url, art_id}, school {id, school_name, email, address, city, zipcode}}}'})
     .end((err, res) => {
       if (err) {
         console.log('error in art by id', err)
