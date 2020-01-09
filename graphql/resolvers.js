@@ -1,4 +1,5 @@
 const db = require('../data/dbConfig.js');
+const axios = require('axios');
 
 const resolvers = {
   Query: {
@@ -122,6 +123,15 @@ const resolvers = {
 
       return deletedImage;
     },
+    sendMail: async (parent, args) => {
+      axios.post("https://us-central1-artco-fcd7a.cloudfunctions.net/emailMessage", args)
+      .then((res) => {
+        console.log('It worked!')
+      })
+      .catch((err) => {
+        console.log('error', err)
+      })
+    }
   },
   Art: {
     images: async parent => {

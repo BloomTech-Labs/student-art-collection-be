@@ -11,7 +11,9 @@
     "test": "cross-env DB_ENV=testing mocha testing/*.test.js"
   },
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
     "apollo-server-express": "^2.9.14",
+    "axios": "^0.19.1",
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",

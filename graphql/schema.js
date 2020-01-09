@@ -32,6 +32,13 @@ const typeDefs = gql`
     image_url: String
     art_id: Int
   }
+  type Contact {
+    sendto: String
+    name: String
+    subject: String
+    email: String
+    message: String
+  }
   type Query {
     allSchools: [School!]!
     school(id: ID!): School!
@@ -86,6 +93,7 @@ const typeDefs = gql`
     deleteSchool(id: ID!): School
     deleteArt(id: ID!): Art
     deleteImage(id: ID!): Image
+    sendMail(sendto: String, name: String, subject: String, email: String, message: String): Contact
   }
 `;
 module.exports = typeDefs;
