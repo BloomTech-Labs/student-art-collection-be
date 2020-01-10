@@ -9,6 +9,7 @@ const typeDefs = gql`
     address: String!
     city: String!
     zipcode: String!
+    art: [Art]
   }
   type Category {
     id: ID!
