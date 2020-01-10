@@ -171,6 +171,9 @@ const resolvers = {
         .first();
     },
   },
+  School: {
+    art: async parent => db('art').where('school_id', parent.id),
+  },
 };
 
 module.exports = resolvers;
