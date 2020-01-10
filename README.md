@@ -152,6 +152,10 @@ DATABASE_URL = This environment variable does not need to be set up locally, but
 
 DB_ENV = This will default to 'development'. If you wish to use testing, please run the script `yarn test` to run the app in the testing environment. This needs to be configured on Heroku to be set to 'production' (no quotes needed when setting the variable).
 
+SGUS = The username for SendGrid, you will need access to student-artco's SendGrid account or have one of your own.
+
+SGPW = The password for SendGrid, you will need access to student-artco's SendGrid account or have one of your own.
+
 ## Contributing
 
 When contributing to this repository, please first discuss the change you wish to make via issue, email, or any other method with the owners of this repository before making a change.

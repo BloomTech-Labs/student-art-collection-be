@@ -1,4 +1,15 @@
 const db = require('../data/dbConfig.js');
+const nodemailer = require('nodemailer')
+const sgTransport = require('nodemailer-sendgrid-transport')
+
+const options = {
+  auth: {
+    api_user: process.env.SGUS,
+    api_key: process.env.SGPW
+  }
+}
+
+const client = nodemailer.createTransport(sgTransport(options))
 
 const resolvers = {
   Query: {
@@ -122,6 +133,25 @@ const resolvers = {
 
       return deletedImage;
     },
+    sendMail: async (parent, args) => {
+      const {sendto, name, subject, fromUser, message} = args
+      const email = {
+        from: fromUser,
+        to: sendto,
+        subject: subject,
+        text: `Hello from ${name}, they say ${message}`,
+        html: `<b>Hello from ${name}, they say ${message}`
+      }
+
+      client.sendMail(email, (err, info) => {
+        if (err){
+          console.log('error in sending mail', err)
+        } else {
+          console.log(info)
+        }
+      })
+      return args
+    }
   },
   Art: {
     images: async parent => {

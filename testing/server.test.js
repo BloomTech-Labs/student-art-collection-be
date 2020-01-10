@@ -13,7 +13,7 @@ describe('Getting the database server message', () => {
                 console.log('error in getting database server message', err)
                 return done()
             } else {
-                console.log('complete', res.text)
+                //console.log('complete', res.text)
                 expect(res.text).to.exist
                 return done()
             }
