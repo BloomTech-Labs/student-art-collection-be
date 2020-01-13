@@ -1,15 +1,15 @@
 const db = require('../data/dbConfig.js');
-const nodemailer = require('nodemailer')
-const sgTransport = require('nodemailer-sendgrid-transport')
+const nodemailer = require('nodemailer');
+const sgTransport = require('nodemailer-sendgrid-transport');
 
 const options = {
   auth: {
     api_user: process.env.SGUS,
-    api_key: process.env.SGPW
-  }
-}
+    api_key: process.env.SGPW,
+  },
+};
 
-const client = nodemailer.createTransport(sgTransport(options))
+const client = nodemailer.createTransport(sgTransport(options));
 
 const resolvers = {
   Query: {
@@ -67,10 +67,26 @@ const resolvers = {
         .where('id', id)
         .first();
     },
-    addArt: async (parent, args) => {
-      const [id] = await db('art').insert(args, 'id');
+    addArt: async (parent, { newArt }) => {
+      console.log(`args >>>`, newArt);
+      const [artId] = await db('art').insert(
+        {
+          title: newArt.title,
+          category: newArt.category,
+          school_id: newArt.school_id,
+          price: newArt.price,
+          artist_name: newArt.artist_name,
+          sold: newArt.school_id,
+          description: newArt.description,
+        },
+        'id'
+      );
+      const [imgId] = await db('images').insert({
+        image_url: newArt.image_url,
+        art_id: artId,
+      });
       return db('art')
-        .where('id', id)
+        .where('id', artId)
         .first();
     },
     addImage: async (parent, args) => {
@@ -134,24 +150,24 @@ const resolvers = {
       return deletedImage;
     },
     sendMail: async (parent, args) => {
-      const {sendto, name, subject, fromUser, message} = args
+      const { sendto, name, subject, fromUser, message } = args;
       const email = {
         from: fromUser,
         to: sendto,
         subject: subject,
         text: `Hello from ${name}, they say ${message}`,
-        html: `<b>Hello from ${name}, they say ${message}`
-      }
+        html: `<b>Hello from ${name}, they say ${message}`,
+      };
 
       client.sendMail(email, (err, info) => {
-        if (err){
-          console.log('error in sending mail', err)
+        if (err) {
+          console.log('error in sending mail', err);
         } else {
-          console.log(info)
+          console.log(info);
         }
-      })
-      return args
-    }
+      });
+      return args;
+    },
   },
   Art: {
     images: async parent => {
