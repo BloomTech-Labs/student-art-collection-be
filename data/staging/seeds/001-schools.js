@@ -2,9 +2,9 @@
 exports.seed = function(knex) {
   return knex('schools').insert([
     { 
-      school_id: '123abc456def789ghi',
-      school_name: 'West High School STAGING',
-      email: 'test-email@example.com',
+      school_id: 'KcfQHI6dMwQpQg9yvPB4ctD1gNi1',
+      school_name: 'West High School',
+      email: 'studentartco@gmail.com',
       address: '123 West St',
       city: 'Westtown',
       zipcode: '12345'
