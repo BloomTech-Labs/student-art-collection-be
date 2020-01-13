@@ -120,7 +120,7 @@ describe('Querying each item by its id', () => {
   })
   it('gets a school by its school id', (done) => {
     request.post('/graphql')
-    .send({query: `{schoolBySchoolId (school_id: "123abc456def789ghi"){id, school_id, school_name, email, address, city, zipcode}}`})
+    .send({query: `{schoolBySchoolId (school_id: "KcfQHI6dMwQpQg9yvPB4ctD1gNi1"){id, school_id, school_name, email, address, city, zipcode}}`})
     .end((err, res) => {
       if (err) {
         console.log('error in school by school id', err)
