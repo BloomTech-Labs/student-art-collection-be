@@ -813,6 +813,13 @@ apollo-link@^1.2.3:
     tslib "^1.9.3"
     zen-observable-ts "^0.8.20"
 
+apollo-logger@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/apollo-logger/-/apollo-logger-0.3.3.tgz#26c55c7daa26fa734fd392be789f04b65bf3258c"
+  integrity sha512-9LMVWrYtondKangJdszhKHj260k92MdPqYW2xlPKwRNfQItigEY2JFb5DHv/8muFdMMtYr6l7/4OTzMl6FCxBA==
+  dependencies:
+    debug "^3.0.1"
+
 apollo-server-caching@^0.5.1:
   version "0.5.1"
   resolved "https://registry.yarnpkg.com/apollo-server-caching/-/apollo-server-caching-0.5.1.tgz#5cd0536ad5473abb667cc82b59bc56b96fb35db6"
@@ -1617,7 +1624,7 @@ debug@2.6.9, debug@^2.2.0, debug@^2.3.3:
   dependencies:
     ms "2.0.0"
 
-debug@3.2.6, debug@^3.1.0, debug@^3.2.6:
+debug@3.2.6, debug@^3.0.1, debug@^3.1.0, debug@^3.2.6:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/debug/-/debug-3.2.6.tgz#e83d17de16d8a7efb7717edbe5fb10135eee629b"
   integrity sha512-mel+jf7nrtEl5Pn1Qx46zARXKDpBbvzezse7p7LqINmdoIk8PYP5SySaxEmYv6TZ0JyEKA1hsCId6DIhgITtWQ==
