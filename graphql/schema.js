@@ -75,7 +75,17 @@ const typeDefs = gql`
       city: String!
       zipcode: String!
     ): School!
-    addArt(newArt: NewArtInput): Art
+    addArt(
+      category: ID!
+      school_id: ID!
+      price: Int
+      sold: Boolean
+      title: String
+      artist_name: String
+      description: String
+      date_posted: String
+      image_url: String!
+    ): Art
     addImage(image_url: String, art_id: Int): Image!
     updateSchool(
       id: ID!
@@ -86,6 +96,7 @@ const typeDefs = gql`
       zipcode: String!
     ): School!
     updateArt(
+      category: ID
       id: ID!
       price: Int
       sold: Boolean
