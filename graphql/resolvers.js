@@ -67,22 +67,21 @@ const resolvers = {
         .where('id', id)
         .first();
     },
-    addArt: async (parent, { newArt }) => {
-      console.log(`args >>>`, newArt);
+    addArt: async (parent, args) => {
+      const [school] = await db('schools').where('school_id', args.school_id);
       const [artId] = await db('art').insert(
         {
-          title: newArt.title,
-          category: newArt.category,
-          school_id: newArt.school_id,
-          price: newArt.price,
-          artist_name: newArt.artist_name,
-          sold: newArt.school_id,
-          description: newArt.description,
+          title: args.title,
+          category: args.category,
+          school_id: school.id,
+          price: args.price,
+          artist_name: args.artist_name,
+          description: args.description,
         },
         'id'
       );
       const [imgId] = await db('images').insert({
-        image_url: newArt.image_url,
+        image_url: args.image_url,
         art_id: artId,
       });
       return db('art')
@@ -130,6 +129,7 @@ const resolvers = {
       return deletedSchool;
     },
     deleteArt: async (parent, args) => {
+      console.log(`<<< art deleted >>>`);
       const deletedArt = await db('art')
         .where('id', args.id)
         .first();
