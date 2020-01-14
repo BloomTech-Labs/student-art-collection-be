@@ -1,18 +1,6 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  input NewArtInput {
-    category: ID!
-    school_id: ID!
-    price: Int
-    sold: Boolean
-    title: String
-    artist_name: String
-    description: String
-    date_posted: String
-    image_url: String!
-    art_id: Int
-  }
   type School {
     id: ID!
     school_id: ID!
