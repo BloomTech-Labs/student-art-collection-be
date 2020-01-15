@@ -68,17 +68,19 @@ const resolvers = {
         .first();
     },
     addArt: async (parent, args) => {
+      console.log(`args >>>`, args);
       const [school] = await db('schools').where('school_id', args.school_id);
       const [artId] = await db('art').insert(
         {
           title: args.title,
           category: args.category,
-          school_id: school.id,
+          // school_id: school.id,
+          school_id: args.school_id,
           price: args.price,
           artist_name: args.artist_name,
           description: args.description,
-        },
-        'id'
+        }
+        // 'id'
       );
       const [imgId] = await db('images').insert({
         image_url: args.image_url,
