@@ -79,13 +79,13 @@ const resolvers = {
           price: args.price,
           artist_name: args.artist_name,
           description: args.description,
-        }
-        // 'id'
+        },
+        'id'
       );
       const [imgId] = await db('images').insert({
             image_url: args.image_url,
             art_id: artId,
-          })
+          }, 'id')
 
       return db('art')
         .where('id', artId)
