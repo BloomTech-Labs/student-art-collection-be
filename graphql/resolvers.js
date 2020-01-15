@@ -82,10 +82,12 @@ const resolvers = {
         }
         // 'id'
       );
-      const [imgId] = await db('images').insert({
-        image_url: args.image_url,
-        art_id: artId,
-      });
+      const [imgId] = await db('images').then(args.image_url.map(() => {
+        insert({
+          image_url: args.image_url,
+          art_id: artId,
+        })
+        }));
       return db('art')
         .where('id', artId)
         .first();
