@@ -26,7 +26,7 @@ const typeDefs = gql`
     date_posted: String
     school: School
     category: Category
-    images: Image
+    images: [Image]
   }
   type Image {
     id: ID!
