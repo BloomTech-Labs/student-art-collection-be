@@ -31,114 +31,127 @@ To get the server running locally:
 
 ## 2️⃣ Endpoints
 
-🚫This is a placeholder, replace the endpoints, access controll, and descriptioin to match your project
-
 #### Organization Routes
 
-| Method | Endpoint                | Access Control | Description                                  |
-| ------ | ----------------------- | -------------- | -------------------------------------------- |
-| GET    | `/organizations/:orgId` | all users      | Returns the information for an organization. |
-| PUT    | `/organizatoins/:orgId` | owners         | Modify an existing organization.             |
-| DELETE | `/organizations/:orgId` | owners         | Delete an organization.                      |
+| Method | Endpoint                                     | Access Control | Description                               |
+| ------ | -------------------------------------------- | -------------- | ----------------------------------------- |
+| POST   | `https://student-artco.herkuapp.com/graphql` | all users      | Entry point for all queries and mutations |
 
-#### User Routes
 
-| Method | Endpoint                | Access Control      | Description                                        |
-| ------ | ----------------------- | ------------------- | -------------------------------------------------- |
-| GET    | `/users/current`        | all users           | Returns info for the logged in user.               |
-| GET    | `/users/org/:userId`    | owners, supervisors | Returns all users for an organization.             |
-| GET    | `/users/:userId`        | owners, supervisors | Returns info for a single user.                    |
-| POST   | `/users/register/owner` | none                | Creates a new user as owner of a new organization. |
-| PUT    | `/users/:userId`        | owners, supervisors |                                                    |
-| DELETE | `/users/:userId`        | owners, supervisors |                                                    |
-
-# Data Model
+#### Data Model
 Version: 1.0
 
-#### SCHOOLS
+##### Query Type
 
----
+| Fields           | Requires                     | Returns        |
+| ---------------- | ---------------------------- | -------------- |
+| allSchools       |                              | School array   |
+| allArts          |                              | Art array      |
+| allCategories    |                              | Category array |
+| schoolBySchoolId | Schools table Primary Key    | School         |
+| art              | Art table Primary Key        | Art            |
+| category         | Categories table Primary Key | Category       |
+
+##### Mutation Type
+
+| Fields    | Parameters                                                                   | Returns |
+| --------- | ---------------------------------------------------------------------------- | ------- |
+| addSchool | school_name, email, address, city, zip                                       | School  |
+| addArt    | category, school_id, price, sold, title, artist_name, description, image_url | Art     |
+| updateArt | id, category, price, sold, title, artist_name, description                   | Art     |
+| deleteArt | id                                                                           | Art     |
+| sendMail  | sendTo, name, subject, fromUser, message                                     | Contact |
+
+##### Object Types
+
+| Type     | Fields                                                                                             |
+| -------- | -------------------------------------------------------------------------------------------------- |
+| School   | id, school_id, school_name, email, address, city, zipcode, art                                     |
+| Art      | id, school_id, price, sold, title, artist_name, description, date_posted, school, category, images |
+| Image    | id, image_url, art_id                                                                              |
+| Category | id, category                                                                                       |
+| Contact  | sendto, name, subject, fromUser, message                                                           |
+
+##### Examples
+
+###### Query
 
 ```
-{
-  id: UUID
-  school_id: STRING [This comes from the 'uid' property in the USER object from firebase_auth]
-  school_name: STRING
-  email: STRING
-  address: STRING
-  city: STRING
-  state: STRING
-  zipcode: STRING
+query {
+  allArts {
+    # can return...
+    id
+    school_id
+    price
+    sold
+    title
+    artist_name
+    description
+    date_posted
+    school {
+      id
+      school_name
+      email
+      address
+      city
+      zipcode
+    }
+    category {
+      id
+      category
+    }
+    images {
+      id
+      image_url
+      art_id
+    }
+  }
 }
 ```
 
-#### CATEGORIES
-
----
+###### Mutation
 
 ```
-{
-  id: UUID
-  category: STRING
+mutation {
+  addArt(
+    category: 1
+    school_id: 1
+    price: 50
+    title: "Fugue with Confused Execution"
+    artist_name: "Myron Medina"
+    description: "A damaged, jealous, locket."
+    image_url: "https://example.com" # this is generated by Cloudinary
+  ) {
+    # can return...
+    id
+    school_id
+    price
+    sold
+    title
+    artist_name
+    description
+    date_posted
+    school {
+      id
+      school_id
+      school_name
+      email
+      address
+      city
+      zipcode
+    }
+    category {
+      id
+      category
+    }
+    images {
+      id
+      image_url
+      art_id
+    }
+  }
 }
 ```
-
-#### ART
-
----
-
-```
-{
-  id: UUID
-  title: STRING
-  category: UUID foreign key in CATEGORIES table
-  price: INTEGER
-  artist_name: STRING
-  sold: BOOLEAN
-  school_id: UUID foreign key in ORGANIZATIONS table
-  description: STRING
-  date_posted: TIMESTAMP
-}
-```
-
-#### IMAGES
-
----
-
-```
-{
-  id: UUID
-  image_url: STRING
-  art_id UUID foreign key in ART table
-}
-```
-
-
-## 2️⃣ Actions
-
-🚫 This is an example, replace this with the actions that pertain to your backend
-
-`getOrgs()` -> Returns all organizations
-
-`getOrg(orgId)` -> Returns a single organization by ID
-
-`addOrg(org)` -> Returns the created org
-
-`updateOrg(orgId)` -> Update an organization by ID
-
-`deleteOrg(orgId)` -> Delete an organization by ID
-<br>
-<br>
-<br>
-`getUsers(orgId)` -> if no param all users
-
-`getUser(userId)` -> Returns a single user by user ID
-
-`addUser(user object)` --> Creates a new user and returns that user. Also creates 7 availabilities defaulted to hours of operation for their organization.
-
-`updateUser(userId, changes object)` -> Updates a single user by ID.
-
-`deleteUser(userId)` -> deletes everything dependent on the user
 
 ## Environment Variables
 
