@@ -7,16 +7,35 @@ const typeDefs = gql`
     offset: Int
     sort: ArtSort
   }
+  input StringWhere {
+    is: String
+    not: String
+    in: [String]
+    not_in: [String]
+    lt: String
+    lte: String
+    gt: String
+    gte: String
+    contains: String
+    not_contains: String
+    starts_with: String
+    not_starts_with: String
+    ends_with: String
+    not_ends_with: String
+  }
+  input BooleanWhere {
+    is: Boolean!
+  }
   input ArtWhere {
     OR: [ArtWhere]
     AND: [ArtWhere]
-    id: String
-    title: String
-    artist_name: String
-    description: String
-    school: String
-    category: String
-    sold: Boolean
+    id: StringWhere
+    title: StringWhere
+    artist_name: StringWhere
+    description: StringWhere
+    school: StringWhere
+    category: StringWhere
+    sold: BooleanWhere 
   }
   input ArtSort {
     id: SortDirection

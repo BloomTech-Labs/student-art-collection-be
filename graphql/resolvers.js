@@ -61,7 +61,7 @@ const resolvers = {
       return db('images').where({ art_id });
     },
     listArt: (parent, args) => {
-      return getManyHOR('art')(root, args, context, info);
+      return getManyHOR('art')(root, args);
     }
   },
   Mutation: {
