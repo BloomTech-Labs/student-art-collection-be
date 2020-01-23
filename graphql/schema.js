@@ -1,6 +1,40 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  input ArtInput {
+    where: ArtWhere
+    limit: Int
+    offset: Int
+    sort: ArtSort
+  }
+  input ArtWhere {
+    OR: [ArtWhere]
+    AND: [ArtWhere]
+    id: String
+    title: String
+    artist_name: String
+    description: String
+    school: String
+    category: String
+    sold: Boolean
+  }
+  input ArtSort {
+    id: SortDirection
+    title: SortDirection
+    artist_name: SortDirection
+    description: SortDirection
+    school: SortDirection
+    category: SortDirection
+    sold: SortDirection
+  }
+  type ArtResults {
+    hasMore: Boolean!
+    totalCount: Int!
+    items: [Art]!
+  }
+  enum SortDirection {
+    DESC
+  }
   type School {
     id: ID!
     school_id: ID!
@@ -53,6 +87,7 @@ const typeDefs = gql`
     allImages: [Image!]!
     image(id: ID!): Image!
     imageByArt(art_id: ID!): [Image!]!
+    listArt(input: ArtInput): ArtResults!
   }
   type Mutation {
     addSchool(

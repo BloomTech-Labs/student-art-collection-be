@@ -1,6 +1,7 @@
 const db = require('../data/dbConfig.js');
 const nodemailer = require('nodemailer');
 const sgTransport = require('nodemailer-sendgrid-transport');
+const { getManyHOR } = require('@jakelowen/knex-graphql-filters')
 
 const options = {
   auth: {
@@ -59,6 +60,9 @@ const resolvers = {
     imageByArt: (parent, { art_id }) => {
       return db('images').where({ art_id });
     },
+    listArt: (parent, args) => {
+      return getManyHOR('art')(root, args, context, info);
+    }
   },
   Mutation: {
     addSchool: async (parent, args) => {
