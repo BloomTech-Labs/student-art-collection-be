@@ -1,7 +1,6 @@
 const db = require('../data/dbConfig.js');
 const nodemailer = require('nodemailer');
 const sgTransport = require('nodemailer-sendgrid-transport');
-const { getManyHOR } = require('@jakelowen/knex-graphql-filters')
 
 const options = {
   auth: {
@@ -60,9 +59,22 @@ const resolvers = {
     imageByArt: (parent, { art_id }) => {
       return db('images').where({ art_id });
     },
-    listArt: async (root, args, context, info) => {
-      console.log(context)
-      return getManyHOR('art')(root, args, context, info);
+    testFilter: (parent, args) => {
+      if (args.filter.category) {
+        const {eq} = args.filter.category
+        return db('art').where('category', eq)
+      }
+      else if (args.filter.zipcode) {
+        const {eq} = args.filter.zipcode
+        const school = db('schools').where('zipcode', eq).select('id')
+        return db('art').where('school_id', school)
+      }
+      else if (args.filter.category && args.filter.zipcode) {
+        const zipcode = args.filter.zipcode.eg 
+        const category = args.filter.category.eg
+        const school = db('schools').where('zipcode', zipcode).select('id')
+        return db('art').where('school_id', school).and('category', category)
+      }
     }
   },
   Mutation: {

@@ -1,58 +1,15 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
-  input ArtInput {
-    where: ArtWhere
-    limit: Int
-    offset: Int
-    sort: ArtSort
+  input DynamicInput {
+    category: CategoryFilterInput
+    zipcode: ZipcodeFilterInput
   }
-  input StringWhere {
-    is: String
-    not: String
-    in: [String]
-    not_in: [String]
-    lt: String
-    lte: String
-    gt: String
-    gte: String
-    contains: String
-    not_contains: String
-    starts_with: String
-    not_starts_with: String
-    ends_with: String
-    not_ends_with: String
+  input ZipcodeFilterInput {
+    eq: String
   }
-  input BooleanWhere {
-    is: Boolean!
-  }
-  input ArtWhere {
-    OR: [ArtWhere]
-    AND: [ArtWhere]
-    id: StringWhere
-    title: StringWhere
-    artist_name: StringWhere
-    description: StringWhere
-    school: StringWhere
-    category: StringWhere
-    sold: BooleanWhere 
-  }
-  input ArtSort {
-    id: SortDirection
-    title: SortDirection
-    artist_name: SortDirection
-    description: SortDirection
-    school: SortDirection
-    category: SortDirection
-    sold: SortDirection
-  }
-  type ArtResults {
-    hasMore: Boolean!
-    totalCount: Int!
-    items: [Art]!
-  }
-  enum SortDirection {
-    DESC
+  input CategoryFilterInput {
+    eq: String
   }
   type School {
     id: ID!
@@ -106,7 +63,7 @@ const typeDefs = gql`
     allImages: [Image!]!
     image(id: ID!): Image!
     imageByArt(art_id: ID!): [Image!]!
-    listArt(input: ArtInput): ArtResults!
+    testFilter(filter: DynamicInput, limit: Int, nextToken: String): [Art]!
   }
   type Mutation {
     addSchool(
