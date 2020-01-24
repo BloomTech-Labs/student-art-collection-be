@@ -59,7 +59,7 @@ const resolvers = {
     imageByArt: (parent, { art_id }) => {
       return db('images').where({ art_id });
     },
-    testFilter: (parent, args) => {
+    filter: (parent, args) => {
       if (args.filter.category) {
         const {eq} = args.filter.category
         return db('art').where('category', eq)

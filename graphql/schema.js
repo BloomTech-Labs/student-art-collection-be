@@ -63,7 +63,7 @@ const typeDefs = gql`
     allImages: [Image!]!
     image(id: ID!): Image!
     imageByArt(art_id: ID!): [Image!]!
-    testFilter(filter: DynamicInput, limit: Int, nextToken: String): [Art]!
+    filter(filter: DynamicInput, limit: Int, nextToken: String): [Art]!
   }
   type Mutation {
     addSchool(
