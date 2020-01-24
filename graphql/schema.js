@@ -1,6 +1,16 @@
 const { gql } = require('apollo-server-express');
 
 const typeDefs = gql`
+  input DynamicInput {
+    category: CategoryFilterInput
+    zipcode: ZipcodeFilterInput
+  }
+  input ZipcodeFilterInput {
+    eq: String
+  }
+  input CategoryFilterInput {
+    eq: String
+  }
   type School {
     id: ID!
     school_id: ID!
@@ -53,6 +63,7 @@ const typeDefs = gql`
     allImages: [Image!]!
     image(id: ID!): Image!
     imageByArt(art_id: ID!): [Image!]!
+    filter(filter: DynamicInput, limit: Int, nextToken: String): [Art]!
   }
   type Mutation {
     addSchool(

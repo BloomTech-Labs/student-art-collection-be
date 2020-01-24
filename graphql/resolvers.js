@@ -59,6 +59,23 @@ const resolvers = {
     imageByArt: (parent, { art_id }) => {
       return db('images').where({ art_id });
     },
+    filter: (parent, args) => {
+      if (args.filter.category) {
+        const {eq} = args.filter.category
+        return db('art').where('category', eq)
+      }
+      else if (args.filter.zipcode) {
+        const {eq} = args.filter.zipcode
+        const school = db('schools').where('zipcode', eq).select('id')
+        return db('art').where('school_id', school)
+      }
+      else if (args.filter.category && args.filter.zipcode) {
+        const zipcode = args.filter.zipcode.eg 
+        const category = args.filter.category.eg
+        const school = db('schools').where('zipcode', zipcode).select('id')
+        return db('art').where('school_id', school).and('category', category)
+      }
+    }
   },
   Mutation: {
     addSchool: async (parent, args) => {
