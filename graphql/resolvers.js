@@ -60,22 +60,33 @@ const resolvers = {
       return db('images').where({ art_id });
     },
     filter: (parent, args) => {
-      if (args.filter.category) {
-        const {eq} = args.filter.category
-        return db('art').where('category', eq)
+      const zip = args.filter.zipcode.eq;
+      const cat = args.filter.category.eq;
+
+      console.log(`>>> zip >>>`, zip);
+      console.log(`>>> cat >>>`, cat);
+
+      if (zip && cat) {
+        console.log(`>>> cat and zip >>>`, { cat, zip });
+
+        const school = db('schools')
+          .where('zipcode', zip)
+          .select('id');
+        return db('art').where({ school_id: school, category: cat });
+      } else if (zip && !cat) {
+        console.log(`inside zip if`, zip);
+
+        const school = db('schools')
+          .where('zipcode', zip)
+          .select('id');
+        return db('art').where('school_id', school);
+      } else if (cat && !zip) {
+        console.log(`inside cat if`, cat);
+        return db('art').where('category', cat);
+      } else {
+        console.log(`nothing works. go home.`);
       }
-      else if (args.filter.zipcode) {
-        const {eq} = args.filter.zipcode
-        const school = db('schools').where('zipcode', eq).select('id')
-        return db('art').where('school_id', school)
-      }
-      else if (args.filter.category && args.filter.zipcode) {
-        const zipcode = args.filter.zipcode.eg 
-        const category = args.filter.category.eg
-        const school = db('schools').where('zipcode', zipcode).select('id')
-        return db('art').where('school_id', school).and('category', category)
-      }
-    }
+    },
   },
   Mutation: {
     addSchool: async (parent, args) => {
@@ -99,10 +110,13 @@ const resolvers = {
         },
         'id'
       );
-      const [imgId] = await db('images').insert({
-            image_url: args.image_url,
-            art_id: artId,
-          }, 'id')
+      const [imgId] = await db('images').insert(
+        {
+          image_url: args.image_url,
+          art_id: artId,
+        },
+        'id'
+      );
 
       return db('art')
         .where('id', artId)
