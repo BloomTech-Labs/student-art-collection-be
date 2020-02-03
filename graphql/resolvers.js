@@ -63,28 +63,19 @@ const resolvers = {
       const zip = args.filter.zipcode.eq;
       const cat = args.filter.category.eq;
 
-      console.log(`>>> zip >>>`, zip);
-      console.log(`>>> cat >>>`, cat);
-
       if (zip && cat) {
-        console.log(`>>> cat and zip >>>`, { cat, zip });
-
         const school = db('schools')
           .where('zipcode', zip)
           .select('id');
         return db('art').where({ school_id: school, category: cat });
       } else if (zip && !cat) {
-        console.log(`inside zip if`, zip);
-
         const school = db('schools')
           .where('zipcode', zip)
           .select('id');
         return db('art').where('school_id', school);
       } else if (cat && !zip) {
-        console.log(`inside cat if`, cat);
         return db('art').where('category', cat);
       } else {
-        console.log(`nothing works. go home.`);
       }
     },
   },
@@ -96,13 +87,11 @@ const resolvers = {
         .first();
     },
     addArt: async (parent, args) => {
-      console.log(`args >>>`, args);
       const [school] = await db('schools').where('school_id', args.school_id);
       const [artId] = await db('art').insert(
         {
           title: args.title,
           category: args.category,
-          // school_id: school.id,
           school_id: args.school_id,
           price: args.price,
           artist_name: args.artist_name,
@@ -110,13 +99,15 @@ const resolvers = {
         },
         'id'
       );
-      const [imgId] = await db('images').insert(
-        {
-          image_url: args.image_url,
-          art_id: artId,
-        },
-        'id'
-      );
+      for (let i = 0; i < args.image_url.length; i++) {
+        await db('images').insert(
+          {
+            image_url: args.image_url[i],
+            art_id: artId
+          },
+          'id'
+        )
+      }
 
       return db('art')
         .where('id', artId)

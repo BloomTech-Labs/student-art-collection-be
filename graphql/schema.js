@@ -83,7 +83,7 @@ const typeDefs = gql`
       artist_name: String
       description: String
       date_posted: String
-      image_url: String!
+      image_url: [String!]!
     ): Art
     addImage(image_url: String, art_id: Int): Image!
     updateSchool(
